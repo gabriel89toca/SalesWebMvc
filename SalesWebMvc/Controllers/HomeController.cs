@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SalesWebMvc.Models.ViewModels;
 using SalesWebMvc.Models;
 using System;
 using System.Collections.Generic;
@@ -17,7 +18,12 @@ namespace SalesWebMvc.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
+            ViewData["Message"] = "Projeto final do curso de C# com POO.";
+            ViewData["Texto"] = "O intuito desse site é obter conhecimento sobre a linguagem de programação C# e suas tecnologias integradas.";
+
+            ViewData["autor"] = "Gabriel da Silva Santos";
+            ViewData["frase"] = "Tente mover o mundo, mas comece movendo a si mesmo. (Platão)";
+            ViewData["email"] = "gabriel@gmail.com";
 
             return View();
         }
