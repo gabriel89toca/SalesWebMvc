@@ -22,7 +22,7 @@ namespace SalesWebMvc.Controllers
             ViewData["Texto"] = "O intuito desse site é obter conhecimento sobre a linguagem de programação C# e suas tecnologias integradas.";
 
             ViewData["autor"] = "Gabriel da Silva Santos";
-            ViewData["frase"] = "Tente mover o mundo, mas comece movendo a si mesmo. (Platão)";
+            ViewData["frase"] = "\"Tente mover o mundo, mas comece movendo a si mesmo.\" (Platão)";
             ViewData["email"] = "gabriel@gmail.com";
 
             return View();
