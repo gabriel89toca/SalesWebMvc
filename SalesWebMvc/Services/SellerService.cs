@@ -10,7 +10,7 @@ namespace SalesWebMvc.Services
     public class SellerService
     {
         private readonly SalesWebMvcContext _context;
-
+        
         public SellerService(SalesWebMvcContext context)
         {
             _context = context;
@@ -23,7 +23,6 @@ namespace SalesWebMvc.Services
 
         public void Insert(Seller obj)
         {
-            obj.Department = _context.Department.First();
             _context.Add(obj);
             _context.SaveChanges();
         }
