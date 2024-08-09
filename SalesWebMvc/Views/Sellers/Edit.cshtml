@@ -9,9 +9,13 @@
 <p>Altere os dados e clique em Salvar</p>
 
 <div class="row">
+
     <div class="col-md-4">
         <form asp-action="Update">
-                <input type="hidden" asp-for="Seller.Id" class="form-control" />
+            <span class="border border-danger">
+                <div asp-validation-summary="All" class="text-danger"></div>
+            </span>
+            <input type="hidden" asp-for="Seller.Id" class="form-control" />
             <div class="form-group">
                 <label asp-for="Seller.Name" class="control-label"></label>
                 <input asp-for="Seller.Name" class="form-control" />
@@ -40,3 +44,6 @@
         </form>
     </div>
 </div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
