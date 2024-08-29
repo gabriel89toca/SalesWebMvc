@@ -39,10 +39,10 @@ namespace SalesWebMvc.Controllers
         public async Task<IActionResult> Create(Seller seller)
         {
 
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 var departments = await _departmentService.FindAllAsync();
-                var viewModel = new SellerFormViewModel { Seller = seller, Departments = departments }; 
+                var viewModel = new SellerFormViewModel { Seller = seller, Departments = departments };
                 return View(viewModel);
             }
             await _sellerService.InsertAsync(seller);
@@ -53,7 +53,7 @@ namespace SalesWebMvc.Controllers
         {
             if (id == null)
             {
-                return RedirectToAction(nameof(Error), new { Message = "Id não informado."});
+                return RedirectToAction(nameof(Error), new { Message = "Id não informado." });
             }
 
             var obj = await _sellerService.FindByIdAsync(id.Value);
@@ -70,8 +70,17 @@ namespace SalesWebMvc.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Delete(int id)
         {
-            await _sellerService.RemoveAsync(id);
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                await _sellerService.RemoveAsync(id);
+                return RedirectToAction(nameof(Index));
+            }
+            catch(IntegrityException e)
+            {
+                return RedirectToAction(nameof(Error), new { Message = e.Message });
+            }
+
+
         }
 
         public async Task<IActionResult> Details(int? id)
@@ -105,7 +114,7 @@ namespace SalesWebMvc.Controllers
                 return RedirectToAction(nameof(Error), new { Message = "Vendedor não encontrado." });
             }
 
-            
+
             List<Department> departments = await _departmentService.FindAllAsync();
             var viewModel = new SellerFormViewModel { Departments = departments, Seller = obj };
             return View(viewModel);
@@ -114,9 +123,9 @@ namespace SalesWebMvc.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id,Seller seller)
+        public async Task<IActionResult> Edit(int? id, Seller seller)
         {
-            if (id != seller.Id) 
+            if (id != seller.Id)
             {
                 return RedirectToAction(nameof(Error), new { Message = "Id não corresponde ao Vendedor informado." });
             }
@@ -127,14 +136,14 @@ namespace SalesWebMvc.Controllers
             }
             catch (NotFoundException e)
             {
-                return RedirectToAction(nameof(Error), new { Message = e.Message});
+                return RedirectToAction(nameof(Error), new { Message = e.Message });
             }
             catch (DbConcurrencyException e)
             {
                 return RedirectToAction(nameof(Error), new { Message = e.Message });
             }
 
-            
+
         }
 
         public IActionResult Error(string message)
@@ -166,7 +175,7 @@ namespace SalesWebMvc.Controllers
             }
 
             //return View(obj);
-        
+
             List<Department> departments = await _departmentService.FindAllAsync();
             var viewModel = new SellerFormViewModel { Departments = departments, Seller = obj };
             return View(viewModel);
